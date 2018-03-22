@@ -10,9 +10,9 @@
 		A35FA0F2205D280100D65596 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35FA0F1205D280100D65596 /* AppDelegate.swift */; };
 		A35FA0F4205D280100D65596 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35FA0F3205D280100D65596 /* ViewController.swift */; };
 		A35FA0F7205D280100D65596 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A35FA0F5205D280100D65596 /* Main.storyboard */; };
+		A35FA0F9205D280100D65596 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A35FA0F8205D280100D65596 /* Assets.xcassets */; };
 		A35FA0FC205D280100D65596 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A35FA0FA205D280100D65596 /* LaunchScreen.storyboard */; };
 		A35FA107205D280100D65596 /* FoodTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A35FA106205D280100D65596 /* FoodTrackerTests.swift */; };
-		F7440ED42062BBE300A4716C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F792B8D22062A04500A3DD4B /* Assets.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,12 +30,12 @@
 		A35FA0F1205D280100D65596 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A35FA0F3205D280100D65596 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A35FA0F6205D280100D65596 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		A35FA0F8205D280100D65596 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A35FA0FB205D280100D65596 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A35FA0FD205D280100D65596 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A35FA102205D280100D65596 /* FoodTrackerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoodTrackerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A35FA106205D280100D65596 /* FoodTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTrackerTests.swift; sourceTree = "<group>"; };
 		A35FA108205D280100D65596 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F792B8D22062A04500A3DD4B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = FoodTracker/Assets.xcassets; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,9 +80,9 @@
 				A35FA0F1205D280100D65596 /* AppDelegate.swift */,
 				A35FA0F3205D280100D65596 /* ViewController.swift */,
 				A35FA0F5205D280100D65596 /* Main.storyboard */,
+				A35FA0F8205D280100D65596 /* Assets.xcassets */,
 				A35FA0FA205D280100D65596 /* LaunchScreen.storyboard */,
 				A35FA0FD205D280100D65596 /* Info.plist */,
-				F792B8D22062A04500A3DD4B /* Assets.xcassets */,
 			);
 			path = FoodTracker;
 			sourceTree = "<group>";
@@ -179,7 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A35FA0FC205D280100D65596 /* LaunchScreen.storyboard in Resources */,
-				F7440ED42062BBE300A4716C /* Assets.xcassets in Resources */,
+				A35FA0F9205D280100D65596 /* Assets.xcassets in Resources */,
 				A35FA0F7205D280100D65596 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -354,7 +354,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = FoodTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.FoodTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -369,7 +368,6 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = FoodTracker/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.FoodTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
