@@ -18,8 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2IM-IX-dy8">
-                                <rect key="frame" x="20" y="40" width="320" height="424.5"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="2IM-IX-dy8">
+                                <rect key="frame" x="20" y="40" width="320" height="542.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Meal Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8bx-WT-g5J">
                                         <rect key="frame" x="0.0" y="0.0" width="86.5" height="20.5"/>
@@ -51,9 +51,13 @@
                                             <outletCollection property="gestureRecognizers" destination="s7p-cF-5wK" appends="YES" id="GsP-Jr-JQ9"/>
                                         </connections>
                                     </imageView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="FlM-FW-1CK" customClass="RatingControl" customModule="FoodTracker" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="432.5" width="320" height="110"/>
+                                    </stackView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Pr0-9e-cG0" secondAttribute="trailing" id="KiD-sm-pDy"/>
+                                    <constraint firstAttribute="trailing" secondItem="FlM-FW-1CK" secondAttribute="trailing" id="mgo-TR-0dd"/>
                                 </constraints>
                             </stackView>
                         </subviews>
