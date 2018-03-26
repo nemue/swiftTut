@@ -13,7 +13,11 @@ import UIKit
     
     // MARK: - Properties
     private var ratingButtons = [UIButton]()    // list of buttonstele
-    var rating = 0
+    var rating = 0 {
+        didSet {
+            updateButtonSelectionState()
+        }
+    }
     
     @IBInspectable var starSize: CGSize = CGSize(width: 44.0, height: 44.0){
         didSet {
@@ -48,7 +52,20 @@ import UIKit
          alternatively: use @objcMembers on the class
          when using @IBAction @objc is automatically implied
         */
-        print("Button pressed")
+        guard let index = ratingButtons.index(of: button) else {
+            // indexOf(_:) method attempts to find the selected button in the array of buttons and to return the index at which it was found
+            fatalError("The button, \(button), is not in the ratingButtons array: \(ratingButtons)")
+        }
+        
+        // calculate rating of the selected button:
+        let selectedRating = index + 1
+        
+        if selectedRating == rating {
+            // if the selected star represents the current rating, reset the rating to 0:
+            rating = 0
+        } else {
+            rating = selectedRating
+        }
     }
     
     // MARK: - Private Methods
@@ -64,6 +81,13 @@ import UIKit
         }
         ratingButtons.removeAll()
         
+        // load button images
+        // to work with Interface Builder, bundle has to be explicitly specified
+        let bundle = Bundle(for: type(of: self))
+        let filledStar = UIImage(named: "filledStar", in: bundle, compatibleWith: self.traitCollection)
+        let emptyStar = UIImage(named: "emptyStar", in: bundle, compatibleWith: self.traitCollection)
+        let highlightedStar = UIImage(named: "highlightedStar", in: bundle, compatibleWith: self.traitCollection)
+
         // create new buttons
         for _ in 0..<starCount {
             // Create the button:
@@ -71,7 +95,11 @@ import UIKit
             // = convenience initializer
             // creates 0 sized button, positioning is done by the stack (Auto Layout) and position will be defined by adding constraints
             
-            button.backgroundColor = UIColor.orange
+            // set button images:
+            button.setImage(emptyStar, for: .normal)
+            button.setImage(filledStar, for: .selected)
+            button.setImage(highlightedStar, for: .highlighted)
+            button.setImage(highlightedStar, for: [.highlighted, .selected])
             
             // button constraints:
             button.translatesAutoresizingMaskIntoConstraints = false    // disables automatically generated constraints
@@ -86,6 +114,16 @@ import UIKit
             
             // add new button to control button array:
             ratingButtons.append(button)
+        }
+        
+        updateButtonSelectionState()
+    }
+    
+    // helper method to select all stars with smaller index than the one selected:
+    private func updateButtonSelectionState() {
+        for (index, button) in ratingButtons.enumerated() {
+            // if if index of button is less than the rating, button should be selected
+            button.isSelected = index < rating  // index < rating will be true for all stars including the one tapped
         }
     }
 }
