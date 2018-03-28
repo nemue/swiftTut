@@ -89,7 +89,7 @@ import UIKit
         let highlightedStar = UIImage(named: "highlightedStar", in: bundle, compatibleWith: self.traitCollection)
 
         // create new buttons
-        for _ in 0..<starCount {
+        for index in 0..<starCount {
             // Create the button:
             let button = UIButton()
             // = convenience initializer
@@ -101,10 +101,13 @@ import UIKit
             button.setImage(highlightedStar, for: .highlighted)
             button.setImage(highlightedStar, for: [.highlighted, .selected])
             
-            // button constraints:
+            // add constraints:
             button.translatesAutoresizingMaskIntoConstraints = false    // disables automatically generated constraints
             button.heightAnchor.constraint(equalToConstant: starSize.height).isActive = true   // constraint needs to be activated
             button.widthAnchor.constraint(equalToConstant: starSize.width).isActive = true
+            
+            // set accessibility label
+            button.accessibilityLabel = "Set \(index + 1) star rating"
             
             // setup button action:
             button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(button:)), for: .touchUpInside)
@@ -124,6 +127,29 @@ import UIKit
         for (index, button) in ratingButtons.enumerated() {
             // if if index of button is less than the rating, button should be selected
             button.isSelected = index < rating  // index < rating will be true for all stars including the one tapped
+            
+            // set the hint string -> only for currently selected star:
+            let hintString: String?
+            if rating == index + 1 {
+                hintString = "Tap to reset the rating to zero."
+            } else {
+                hintString = nil
+            }
+            
+            // calculate the value string:
+            let valueString: String
+            switch (rating) {
+            case 0:
+                valueString = "No rating set."
+            case 1:
+                valueString = "1 star set."
+            default:
+                valueString = "\(rating) stars set"
+            }
+            
+            // assign hint string and value string:
+            button.accessibilityHint = hintString
+            button.accessibilityValue = valueString
         }
     }
 }

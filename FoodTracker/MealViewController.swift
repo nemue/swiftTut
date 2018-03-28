@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MealViewController.swift
 //  FoodTracker
 //
 //  Created by Nele on 17.03.18.
@@ -7,13 +7,13 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     // MARK: - Properties
     
     @IBOutlet fileprivate weak var nameTextField: UITextField?
-    @IBOutlet fileprivate weak var mealNameLabel: UILabel?
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var ratingControl: RatingControl!
     
     
     // MARK: - View controller life cycle
@@ -44,7 +44,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         // is called after the text field resigns its first-responder status
-        mealNameLabel?.text = textField.text
+        
+        // TODO
     }
     
     
@@ -76,13 +77,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
     
     // MARK: - Actions
     
-    @IBAction func setDefaultLabelText(_ sender: UIButton) {
-        // sender: object that was responsible for triggering the action
-        mealNameLabel?.text = "Spagetti Bolognese (Veggie)"
-
-    }
-    
     @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
+        // sender: object that was responsible for triggering the action
+
         // Hide the keyboard:
         nameTextField?.resignFirstResponder()
         // falls user bild antippt, wärend textfeld aktiv
@@ -115,7 +112,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UIImagePickerContro
 
 // MARK: - Setup UI Elements
 
-fileprivate extension ViewController {
+fileprivate extension MealViewController {
 
     func setupUIElements() {
         // self.nameTextField?.text = "Name your meal"
@@ -128,6 +125,6 @@ fileprivate extension ViewController {
     }
     
     func setupBackground() {
-        self.view.backgroundColor = UIColor.yellow
+        // Bself.view.backgroundColor = UIColor.yellow
     }
 }
