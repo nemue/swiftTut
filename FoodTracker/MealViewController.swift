@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import os.log
 
 class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -14,7 +15,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     @IBOutlet fileprivate weak var nameTextField: UITextField?
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var ratingControl: RatingControl!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
+    @IBOutlet weak var cancelButton: UIBarButtonItem!
     
+    /* This value is either passed by 'MealTableViewController' in 'prepare(for:sender:)'
+     or constructed as part of adding a new meal.
+     */
+    var meal: Meal?
     
     // MARK: - View controller life cycle
     
@@ -25,12 +32,22 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
         // View Controller is delegate.
         nameTextField?.delegate = self
         
-        self.setupUIElements()
-        self.setupBackground()
+        // display meal data, if editing existing meal:
+        if let meal = meal { // if meal is not nil
+            navigationItem.title = meal.name
+            nameTextField?.text = meal.name
+            photoImageView.image = meal.photo
+            ratingControl.rating = meal.rating
+        }
+        
+        // enable save button only, if a name has been entered -> here: button gets disabled, when view first loads
+        updateSaveButtonState()
+        
+        // self.setupUIElements()   // programmatically set up UI elements (Panos)
     }
     
 
-    // MARK: - UIFIeldTextDelegate
+    // MARK: - UITextFieldDelegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // gets called when user presses enter/taps done
@@ -45,7 +62,13 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
     func textFieldDidEndEditing(_ textField: UITextField) {
         // is called after the text field resigns its first-responder status
         
-        // TODO
+        updateSaveButtonState()
+        navigationItem.title = textField.text // sets the title of the scene to entered text
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        // disable save button while typing:
+        saveButton.isEnabled = false
     }
     
     
@@ -72,8 +95,52 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 
     }
     
-    // MARK: - UINavigationControllerDelegate
-
+    // MARK: - Navigation
+    
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        // dismisses the modal scene:
+        // (completion: the block to execute after the view controller is dismissed)
+        
+        // depending on presentation style (modal or push), the view needs to be dismissed in 2 different ways:
+        // bool-wert: da meal detail scene in eigenen view controller eingebettet ist, nur true, wenn (+) getippt wird
+        let isPresentingInAddMealMode = presentingViewController is UINavigationController
+        
+        // adding a meal: meal detail scene is presented inside a modal navigation controller
+        // editing a meal: meal detail scene is pushed onto a navigation stack
+        
+        if isPresentingInAddMealMode {
+            dismiss(animated: true, completion: nil)
+        }
+        else if let owningNavigationController = navigationController {
+            // If the view controller has been pushed onto a navigation stack, this property contains a reference to the stack’s navigation controller.
+            
+            // dismisses the meal detail scene and returns to meal list
+            owningNavigationController.popViewController(animated: true)
+        }
+        else {
+            fatalError("The MealViewController is not inside a navigation controller.")
+        }
+    }
+    
+    // view controller can be configured before presented with this method:
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        super.prepare(for: segue, sender: sender)
+        
+        // configure destination view controller only when the save button is pressed:_
+        guard let button = sender as? UIBarButtonItem, button === saveButton else {
+            // === identity operator
+            os_log("The save button was not pressed, cancelling", log: OSLog.default, type: .debug)
+            return
+        }
+        
+        let name = nameTextField?.text ?? ""
+        // ?? returns value of the optional or default value (""), if optional is nil
+        let photo = photoImageView.image
+        let rating = ratingControl.rating
+        
+        // create meal to be passed to MealTableViewController after the unwind segue
+        meal = Meal(name: name, photo: photo, rating: rating)
+    }
     
     // MARK: - Actions
     
@@ -115,16 +182,21 @@ class MealViewController: UIViewController, UITextFieldDelegate, UIImagePickerCo
 fileprivate extension MealViewController {
 
     func setupUIElements() {
+        
         // self.nameTextField?.text = "Name your meal"
-        // text steht "wirklich" im textfeld und wird beim antippen gelöscht
-        // placeholder im storyboard wird auch bei eingabe hellgrau angezeigt
-        // self.mealNameLabel?.text = "Crash"
+        /* text steht "wirklich" im textfeld und wird beim antippen gelöscht
+         placeholder im storyboard wird auch bei eingabe hellgrau angezeigt
+         self.mealNameLabel?.text = "Crash" */
         
-        
-        self.photoImageView.image = UIImage(named: "DefaultPhoto");
+        // self.photoImageView.image = UIImage(named: "DefaultPhoto");
+        // ist auch über storyboard gelöst
     }
     
-    func setupBackground() {
-        // Bself.view.backgroundColor = UIColor.yellow
+    // MARK: - Private Methods
+    
+    private func updateSaveButtonState(){
+        // disaöbe save button, if name text field is empty:
+        let text = nameTextField?.text ?? ""
+        saveButton.isEnabled = !text.isEmpty
     }
 }
